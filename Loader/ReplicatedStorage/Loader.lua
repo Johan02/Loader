@@ -1,8 +1,8 @@
 local Player = game:GetService('Players').LocalPlayer
 
-local MainModelZX = workspace:WaitForChild('MainModelZX')
+local MainModelZX = workspace:WaitForChild('Nature')
 
-local RenderDistance = 200
+local RenderDistance = 2000
 
 
 local HumanoidRootPart
@@ -58,15 +58,25 @@ local function Loadout(realIndexModel, Visible)
 
 end
 
+local function SingleLoadout(realIndexModel, Visible)
+	if Visible == true and ModelsVisible[realIndexModel] == false then
+		ModelsVisible[realIndexModel] = Visible
+		Models[realIndexModel].Parent = MainModelZX
+	elseif Visible == false and ModelsVisible[realIndexModel] == true then
+		ModelsVisible[realIndexModel] = Visible
+		Models[realIndexModel].Parent = nil
+	end
+end
+
 local function GetDistance(LastIndexModelLoaded)
 	if not HumanoidRootPart then return	end
 	for indexModel, modelPosition in pairs(ModelsPosition) do
 		local realModelPosition = Vector3.new(modelPosition[1], modelPosition[2], modelPosition[3])
 		if (HumanoidRootPart.Position - realModelPosition).Magnitude > RenderDistance then
 			--print(indexModel)
-			Loadout(indexModel, false)
+			SingleLoadout(indexModel, false)
 		elseif (HumanoidRootPart.Position - realModelPosition).Magnitude <= RenderDistance then
-			Loadout(indexModel, true)
+			SingleLoadout(indexModel, true)
 		end
 	end
 end
