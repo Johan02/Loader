@@ -23,11 +23,11 @@ for indexModel, realModel in pairs(MainModelZX:GetDescendants()) do
 end
 
 print(ModelsPosition)
-
-local function GetDistance()
+--Maybe add the loadoutpart in the actual getdistance()
+local function GetDistance(LastIndexModelLoaded)
 	if not HumanoidRootPart then return	end
 	for indexModel, modelPosition in pairs(ModelsPosition) do
-		local realModelPosition = Vector3.new(modelPosition[1],modelPosition[2],modelPosition[3] )
+		local realModelPosition = Vector3.new(modelPosition[1], modelPosition[2], modelPosition[3])
 		if (HumanoidRootPart.Position - realModelPosition).Magnitude > 50 then
 			--print(indexModel)
 			return indexModel, false
@@ -35,9 +35,6 @@ local function GetDistance()
 			return indexModel, true
 		end
 	end
-	
-	
-	
 end
 
 local function Loadout(realIndexModel, Visible)
@@ -82,7 +79,7 @@ Player.CharacterAdded:Connect(CharacterAdded)
 
 while true do
 
-	local DistanceConfirmedAndIndexModel, VisibleStatus = GetDistance()
+	local DistanceConfirmedAndIndexModel, VisibleStatus = GetDistance(LastModelLoaded)
 	
 	if HumanoidRootPart and DistanceConfirmedAndIndexModel and LastModelLoaded ~= DistanceConfirmedAndIndexModel then
 		print(LastModelLoaded)
