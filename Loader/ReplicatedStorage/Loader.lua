@@ -2,6 +2,8 @@ local Player = game:GetService('Players').LocalPlayer
 
 local MainModelZX = workspace:WaitForChild('MainModelZX')
 
+local RenderDistance = 200
+
 
 local HumanoidRootPart
 
@@ -60,10 +62,10 @@ local function GetDistance(LastIndexModelLoaded)
 	if not HumanoidRootPart then return	end
 	for indexModel, modelPosition in pairs(ModelsPosition) do
 		local realModelPosition = Vector3.new(modelPosition[1], modelPosition[2], modelPosition[3])
-		if (HumanoidRootPart.Position - realModelPosition).Magnitude > 50 then
+		if (HumanoidRootPart.Position - realModelPosition).Magnitude > RenderDistance then
 			--print(indexModel)
 			Loadout(indexModel, false)
-		elseif (HumanoidRootPart.Position - realModelPosition).Magnitude <= 50 then
+		elseif (HumanoidRootPart.Position - realModelPosition).Magnitude <= RenderDistance then
 			Loadout(indexModel, true)
 		end
 	end
