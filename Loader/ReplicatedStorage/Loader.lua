@@ -24,26 +24,15 @@ end
 
 print(ModelsPosition)
 --Maybe add the loadoutpart in the actual getdistance()
-local function GetDistance(LastIndexModelLoaded)
-	if not HumanoidRootPart then return	end
-	for indexModel, modelPosition in pairs(ModelsPosition) do
-		local realModelPosition = Vector3.new(modelPosition[1], modelPosition[2], modelPosition[3])
-		if (HumanoidRootPart.Position - realModelPosition).Magnitude > 50 then
-			--print(indexModel)
-			return indexModel, false
-		elseif (HumanoidRootPart.Position - realModelPosition).Magnitude <= 50 then
-			return indexModel, true
-		end
-	end
-end
+
 
 local function Loadout(realIndexModel, Visible)
 	for indexModel, realModel in pairs(Models) do
 		if realIndexModel == indexModel then
 			for indexVisibleModel, visibleModel in pairs(ModelsVisible) do
 				if indexVisibleModel == realIndexModel then
-					
-					
+
+
 					if Visible == true then
 						ModelsVisible[realIndexModel] = Visible
 						Models[realIndexModel].Parent = MainModelZX
@@ -51,8 +40,8 @@ local function Loadout(realIndexModel, Visible)
 						ModelsVisible[realIndexModel] = Visible
 						Models[realIndexModel].Parent = nil
 					end
-					
-					
+
+
 					--[[if ModelsVisible[realIndexModel] == true then
 						
 						ModelsVisible[realIndexModel] = false
@@ -65,6 +54,19 @@ local function Loadout(realIndexModel, Visible)
 		end
 	end
 
+end
+
+local function GetDistance(LastIndexModelLoaded)
+	if not HumanoidRootPart then return	end
+	for indexModel, modelPosition in pairs(ModelsPosition) do
+		local realModelPosition = Vector3.new(modelPosition[1], modelPosition[2], modelPosition[3])
+		if (HumanoidRootPart.Position - realModelPosition).Magnitude > 50 then
+			--print(indexModel)
+			Loadout(indexModel, false)
+		elseif (HumanoidRootPart.Position - realModelPosition).Magnitude <= 50 then
+			Loadout(indexModel, true)
+		end
+	end
 end
 
 local function CharacterAdded(Character)
@@ -80,17 +82,13 @@ Player.CharacterAdded:Connect(CharacterAdded)
 while true do
 
 	local DistanceConfirmedAndIndexModel, VisibleStatus = GetDistance(LastModelLoaded)
-	
-	if HumanoidRootPart and DistanceConfirmedAndIndexModel and LastModelLoaded ~= DistanceConfirmedAndIndexModel then
+
+	--[[if HumanoidRootPart and DistanceConfirmedAndIndexModel and LastModelLoaded ~= DistanceConfirmedAndIndexModel then
 		print(LastModelLoaded)
 		print(DistanceConfirmedAndIndexModel)
 		LastModelLoaded = DistanceConfirmedAndIndexModel
 		Loadout(DistanceConfirmedAndIndexModel,VisibleStatus)
-	end
+	end]]
 	wait()
 
 end
-
-
-
-
