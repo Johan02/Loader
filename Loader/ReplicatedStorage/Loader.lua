@@ -2,7 +2,7 @@ local Player = game:GetService('Players').LocalPlayer
 
 local MainModelZX = workspace:WaitForChild('Nature')
 
-local RenderDistance = 2000
+local RenderDistance = 500
 
 
 local HumanoidRootPart
@@ -21,11 +21,15 @@ for indexModel, realModel in pairs(MainModelZX:GetDescendants()) do
 
 		local realModelPosition = realModel:GetModelCFrame().Position
 		ModelsPosition[indexModel] = {realModelPosition.X, realModelPosition.Y, realModelPosition.Z}
+	elseif realModel:IsA('BasePart') and realModel.Parent:IsA('Folder') then
+		Models[indexModel] = realModel
+		ModelsVisible[indexModel] = true
+
+		local realModelPosition = realModel.CFrame.Position
+		ModelsPosition[indexModel] = {realModelPosition.X, realModelPosition.Y, realModelPosition.Z}
+		
 	end
 end
-
-print(ModelsPosition)
---Maybe add the loadoutpart in the actual getdistance()
 
 
 local function Loadout(realIndexModel, Visible)
