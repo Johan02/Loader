@@ -1,6 +1,6 @@
 local Player = game:GetService('Players').LocalPlayer
 
-local MainModelZX = workspace:WaitForChild('Nature')
+local MainModelZX = workspace:WaitForChild('LoadObjects')
 
 local RenderDistance = 500
 
